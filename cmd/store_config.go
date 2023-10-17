@@ -109,7 +109,6 @@ func InitPublishers(sc *StoreConfig) (curls []shared.Publisher, browsers []share
 		for _, b := range sc.Stores.Browsers {
 			fmt.Println("浏览器上传已移除,请删除配置文件中的浏览器配置. [browsers.%s]" + b.Key)
 		}
-
 	}
 
 	// type 3

@@ -1,9 +1,7 @@
 package oppo
 
 import (
-	"errors"
 	"strconv"
-	"time"
 
 	"github.com/KevinGong2013/apkgo/cmd/shared"
 )
@@ -28,9 +26,13 @@ func (c *Client) Do(req shared.PublishRequest) error {
 	thirdCategoryId, _ := strconv.Atoi(app.ThirdCategoryID)
 	param.ThirdCategoryId = thirdCategoryId
 
-	param.Summary = "[寓小二]公寓系统定制专家" //app.Summary
+	param.Summary = app.Summary //app.Summary
 	param.DetailDesc = app.DetailDesc
-	param.UpdateDesc = req.UpdateDesc
+	if req.UpdateDesc != "" {
+		param.UpdateDesc = req.UpdateDesc
+	} else {
+		param.UpdateDesc = app.UpdateDesc
+	}
 	param.PrivacySourceUrl = app.PrivacySourceURL
 	param.IconUrl = app.IconURL
 	param.PicUrl = app.PicURL
@@ -80,27 +82,29 @@ func (c *Client) Do(req shared.PublishRequest) error {
 	}
 
 	// 3. 发布
-	if err := c.publish(param); err != nil {
-		return err
-	}
+	// if err := c.publish(param); err != nil {
+	// 	return err
+	// }
 
-	times := 0
-	for {
-		if times > 10 {
-			return errors.New("发布失败")
-		}
-		time.Sleep(time.Second * 10)
-		state, err := c.taskState(req.PackageName, strconv.Itoa(int(req.VersionCode)))
-		if err != nil {
-			return err
-		}
-		// 成功
-		if state.TaskState == "2" {
-			return nil
-		}
-		if state.TaskState == "3" {
-			return errors.New(state.ErrMsg)
-		}
-		times += 1
-	}
+	// times := 0
+	// for {
+	// 	if times > 10 {
+	// 		return errors.New("发布失败")
+	// 	}
+	// 	time.Sleep(time.Second * 10)
+	// 	state, err := c.taskState(req.PackageName, strconv.Itoa(int(req.VersionCode)))
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	// 成功
+	// 	if state.TaskState == "2" {
+	// 		return nil
+	// 	}
+	// 	if state.TaskState == "3" {
+	// 		return errors.New(state.ErrMsg)
+	// 	}
+	// 	times += 1
+	// }
+
+	return nil
 }

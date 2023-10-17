@@ -91,6 +91,9 @@ func init() {
 	uploadCmd.Flags().StringSliceP("store", "s", []string{}, "需要上传到哪些商店。 [-s all] 上传到配置文件中的所有商店")
 	uploadCmd.MarkFlagRequired("store")
 
+	//包文件夹
+	// uploadCmd.Flags().StringP("channal_path", "", "", "多渠道包文件夹路径，如果-stores 是多渠道时，会在本这个文件夹中查找对应的渠道包")
+
 	// apk 文件
 	uploadCmd.Flags().StringP("file", "f", "", "单包apk文件路径")
 

@@ -116,6 +116,7 @@ func publish(req shared.PublishRequest, ps []shared.Publisher) map[string]string
 	resultTable.Render()
 
 	return result
+
 }
 
 func trackPublish(pw progress.Writer, publisher shared.Publisher) *progress.Tracker {
